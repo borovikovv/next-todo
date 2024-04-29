@@ -1,9 +1,9 @@
 import { Todo as TodoType } from "../../types";
-import { api } from "../../utils";
 import { Todo } from "@/app/components/todo";
+import { getTodos } from'@/lib/todos';
 
 export default async function Todos() {
-  const { todos } = await api<{ todos: TodoType[] }>('https://dummyjson.com/todos');
+  const todos = await getTodos() as TodoType[];
 
   return (
     <div>
