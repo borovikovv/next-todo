@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
+import clx from 'classnames';
 
 import { Todo } from "./todo";
 import { Todo as TodoType } from "@/app/types";
@@ -28,6 +29,10 @@ export function TodoContainer({ todo }: Props) {
     setSelected(!selected);
   }
 
+  const onComplete = () => {
+    editTodoAction({ ...todo, completed: !!todo.completed ? 0 : 1 });
+  }
+
   const onDelete = () => {
     deleteTodoAction(todo);
   }
@@ -37,6 +42,10 @@ export function TodoContainer({ todo }: Props) {
       <li>
         <Todo todo={todo}>
           <button onClick={onDelete} className="btnDanger">Delete</button>
+          <button onClick={onComplete} className={clx("ml-3", {
+            "btnSecondary": todo.completed,
+            "btnSuccess": !todo.completed,
+          })}>{todo.completed ? "Undo" : "Complete"}</button>
           <button onClick={onSelect} className="btnPrimary ml-3">{selected ? "Close" : "Edit"}</button>
         </Todo>
       </li>
