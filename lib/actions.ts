@@ -2,6 +2,7 @@
 
 import { Todo } from "@/app/types";
 import { editTodo } from "@/lib/todos";
+import { revalidatePath } from "next/cache";
 
 export async function createTodo(formData: FormData) {
   const todoBody = formData.get("todo");
@@ -22,10 +23,13 @@ export async function createTodo(formData: FormData) {
 }
 
 export async function editTodoAction(todo: Todo) {
-  console.log(todo);
   try {
-    const result = await editTodo(todo);
+    await editTodo(todo);
+    revalidatePath('/dashboard');
+
+    return { success: true };
   } catch(err) {
     console.error(err);
+    return { success: false, error: "Update failed" };
   }
 }
