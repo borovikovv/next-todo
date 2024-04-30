@@ -1,5 +1,8 @@
 "use server";
 
+import { Todo } from "@/app/types";
+import { editTodo } from "@/lib/todos";
+
 export async function createTodo(formData: FormData) {
   const todoBody = formData.get("todo");
 
@@ -18,6 +21,11 @@ export async function createTodo(formData: FormData) {
   }
 }
 
-export async function EditTodo() {
-  
+export async function editTodoAction(todo: Todo) {
+  console.log(todo);
+  try {
+    const result = await editTodo(todo);
+  } catch(err) {
+    console.error(err);
+  }
 }

@@ -1,5 +1,5 @@
 import { Todo as TodoType } from "../../types";
-import { Todo } from "@/app/components/todo";
+import { TodoContainer } from "@/app/components/todo";
 import { getTodos } from'@/lib/todos';
 
 export default async function Todos() {
@@ -10,7 +10,7 @@ export default async function Todos() {
       <ul className="flex gap-1 flex-col p-2">
         {
           todos.map((todo) =>  {
-            return <Todo todo={todo} />
+            return <TodoContainer key={todo.id} todo={todo} />
           })
         }
       </ul>
