@@ -1,24 +1,17 @@
 "use server";
 
 import { Todo } from "@/app/types";
-import { editTodo } from "@/lib/todos";
+import { createTodo, editTodo } from "@/lib/todos";
 import { revalidatePath } from "next/cache";
 
-export async function createTodo(formData: FormData) {
-  const todoBody = formData.get("todo");
-
+export async function createTodoAction(todo: Todo) {
   try {
-    void fetch('https://dummyjson.com/todos/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        todo: todoBody,
-        completed: false,
-        userId: 5,
-      })
-    })
+    await createTodo(todo);
+    revalidatePath('/dashboard');
+    return { success: true };
   } catch (err) {
     console.error(err);
+    return { success: false, error: "Create failed" };
   }
 }
 

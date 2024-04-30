@@ -21,3 +21,17 @@ export async function editTodo(todo: Todo) {
     UPDATE todos SET todo = ?, completed = ? WHERE id = ?`);
     stmt.run(todo.todo, todo.completed, todo.id);
 }
+
+
+export async function createTodo(todo: Todo) {
+  const stmt = db.prepare(`
+      INSERT INTO todos VALUES (
+         null,
+         @todo,
+         @completed,
+         @user_id
+      )
+   `);
+
+  stmt.run(todo);
+}
