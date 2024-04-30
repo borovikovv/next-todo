@@ -20,7 +20,7 @@ export default function Create() {
     <div className="mt-5">
       <form action={formAction} className="flex gap-2">
         <textarea onChange={(e) => setTodoValue(e.target.value)} value={todoValue} name="todo" />
-        <SubmitButton />
+        <SubmitButton disabled={!todoValue} />
       </form>
     </div>
   )

@@ -29,6 +29,12 @@ body {
 .btnPrimary {
   @apply p-1 bg-slate-600 text-white rounded-md;
 }
+.btnPrimary:disabled {
+  @apply p-1 bg-slate-100 text-gray-500 rounded-md cursor-not-allowed;
+}
+.btnDanger {
+  @apply p-1 bg-red-100 text-black rounded-md;
+}
 
 @layer utilities {
   .text-balance {

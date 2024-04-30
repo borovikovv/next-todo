@@ -5,7 +5,7 @@ import { useFormState } from "react-dom";
 
 import { Todo } from "./todo";
 import { Todo as TodoType } from "@/app/types";
-import { editTodoAction } from "@/lib/actions";
+import { deleteTodoAction, editTodoAction } from "@/lib/actions";
 import { SubmitForm } from "./SubmitForm";
 
 type Props = {
@@ -15,8 +15,8 @@ type Props = {
 export function TodoContainer({ todo }: Props) {
   const [selected, setSelected] = useState(false);
   const [value, changeValue] = useState(todo.todo);
-  const editTodoActionWthTodo = editTodoAction.bind(null, {...todo, todo: value});
-  const [state, formAction] = useFormState(editTodoActionWthTodo, null);
+  const editTodoActionWithTodo = editTodoAction.bind(null, {...todo, todo: value});
+  const [state, formAction] = useFormState(editTodoActionWithTodo, null);
 
   useEffect(() => {
     if(state?.success) {
@@ -28,10 +28,17 @@ export function TodoContainer({ todo }: Props) {
     setSelected(!selected);
   }
 
+  const onDelete = () => {
+    deleteTodoAction(todo);
+  }
+
   return (
     <>
-      <li onClick={onSelect}>
-        <Todo todo={todo} />
+      <li>
+        <Todo todo={todo}>
+          <button onClick={onDelete} className="btnDanger">Delete</button>
+          <button onClick={onSelect} className="btnPrimary ml-3">{selected ? "Close" : "Edit"}</button>
+        </Todo>
       </li>
       {selected ? (
         <form action={formAction}>
